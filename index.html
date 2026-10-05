@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pakistan Commercial Banks Dashboard — InvestKaar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- HEADER -->
+<header class="hdr">
+    <div class="hdr-inner">
+        <div class="hdr-brand">
+            <div class="logo-wrapper">
+                <img src="images/logo.png" alt="InvestKaar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div style="display:none; width:42px; height:42px; border-radius:10px; background:linear-gradient(135deg,#C9A84C,#F5E6B8); align-items:center; justify-content:center; font-weight:900; font-size:20px; color:#0A1628;">IK</div>
+            </div>
+            <div class="hdr-titles">
+                <div class="hdr-brandline">INVESTKAAR COMMUNITY</div>
+                <h1 class="hdr-main">Pakistan Banking Sector Intelligence</h1>
+                <p class="hdr-sub">Bank Performance &amp; Peer Analytics · FY06–FY25</p>
+                <p class="hdr-disclaimer">Disclaimer: This is an Independent project and InvestKaar Advisory and the developer holds no responsibility for decisions based on this dashboard.</p>
+            </div>
+        </div>
+        <div class="hdr-meta">
+            <span class="meta-badge">20 Banks</span>
+            <span class="meta-badge">Updated: FY25</span>
+        </div>
+    </div>
+</header>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+    <div class="sb-header">
+        <button class="sb-toggle" id="sb-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </button>
+        <span class="sb-label">Sections</span>
+    </div>
+    <nav class="tabs">
+        <button class="tab active" onclick="ST('summ',this)">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+            <span class="tab-label">Overview</span>
+        </button>
+        <button class="tab" onclick="ST('dep',this)">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
+            <span class="tab-label">Total Deposits</span>
+        </button>
+        <button class="tab" onclick="ST('ca',this)">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            <span class="tab-label">Current Account Mix</span>
+        </button>
+        <button class="tab" onclick="ST('sa',this)">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h3v2h4v-4c1-.5 1.7-1 2-2h2v-4h-2c0-1-.5-1.5-1-2V5z"/><path d="M2 9v1c0 1.1.9 2 2 2h1"/></svg>
+            <span class="tab-label">Savings Account Mix</span>
+        </button>
+        <button class="tab" onclick="ST('niml',this)">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+            <span class="tab-label">Net Interest Margin</span>
+        </button>
+        <button class="tab" onclick="ST('nimt',this)">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+            <span class="tab-label">NIM Trajectory</span>
+        </button>
+        <button class="tab" onclick="ST('nmi',this)">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>
+            <span class="tab-label">Net Interest Income</span>
+        </button>
+        <button class="tab" onclick="ST('com',this)">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+            <span class="tab-label">Non-Interest Income</span>
+        </button>
+        <button class="tab" onclick="ST('br',this)">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>
+            <span class="tab-label">Branch Network</span>
+        </button>
+        <button class="tab" onclick="ST('roe',this)">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+            <span class="tab-label">Return on Equity</span>
+        </button>
+        <button class="tab" onclick="ST('ci',this)">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+            <span class="tab-label">Cost-to-Income</span>
+        </button>
+        <button class="tab" onclick="ST('banksnap',this)">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M14.5 22H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8l6 6v3.5"/><circle cx="16.5" cy="17.5" r="3.5"/><path d="m22 22-2.3-2.3"/></svg>
+            <span class="tab-label">Bank Profile</span>
+        </button>
+    </nav>
+</aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main" id="main">
+        <!-- Mobile Menu -->
+        <section id="tab-menu" class="panel mm-menu">
+            <div class="mm-hdr">
+                <h1>Pakistan Banking Dashboard</h1>
+                <p>20 Banks · FY06–FY25 · Tap a section to explore</p>
+            </div>
+            <div class="mm-grid">
+                <div class="mm-card" onclick="goTo('summ')"><span class="mm-tag">📊</span><span class="mm-lbl">Summary</span></div>
+                <div class="mm-card" onclick="goTo('dep')"><span class="mm-tag">🏦</span><span class="mm-lbl">Deposits</span></div>
+                <div class="mm-card" onclick="goTo('ca')"><span class="mm-tag">💳</span><span class="mm-lbl">CA %</span></div>
+                <div class="mm-card" onclick="goTo('sa')"><span class="mm-tag">💰</span><span class="mm-lbl">SA %</span></div>
+                <div class="mm-card" onclick="goTo('niml')"><span class="mm-tag">📈</span><span class="mm-lbl">NIM Latest</span></div>
+                <div class="mm-card" onclick="goTo('nimt')"><span class="mm-tag">📉</span><span class="mm-lbl">NIM Trend</span></div>
+                <div class="mm-card" onclick="goTo('nmi')"><span class="mm-tag">💹</span><span class="mm-lbl">Net Markup</span></div>
+                <div class="mm-card" onclick="goTo('com')"><span class="mm-tag">🔄</span><span class="mm-lbl">Commission</span></div>
+                <div class="mm-card" onclick="goTo('br')"><span class="mm-tag">🏛️</span><span class="mm-lbl">Branches</span></div>
+                <div class="mm-card" onclick="goTo('roe')"><span class="mm-tag">📊</span><span class="mm-lbl">ROE</span></div>
+                <div class="mm-card" onclick="goTo('ci')"><span class="mm-tag">⚙️</span><span class="mm-lbl">C/I</span></div>
+                <div class="mm-card" onclick="goTo('banksnap')"><span class="mm-tag">🔍</span><span class="mm-lbl">Snapshot</span></div>
+            </div>
+        </section>
+
+        <!-- ===== TAB: SUMMARY ===== -->
+        <section id="tab-summ" class="panel">
+            <div class="mb-back" onclick="goBack()">← Back to Menu</div>
+            <div class="ptabs">
+                <button class="ptab active" onclick="sSP('5',this)">5 Year</button>
+                <button class="ptab" onclick="sSP('10',this)">10 Year</button>
+                <button class="ptab" onclick="sSP('15',this)">15 Year</button>
+                <button class="ptab" onclick="sSP('all',this)">Full</button>
+                <button class="ptab" onclick="sSP('first5',this)">First 5Y</button>
+            </div>
+            <div class="search-bar">
+                <input id="summ-search" type="text" placeholder="Search banks… e.g. MCB, HBL, Meezan" oninput="onSummSearch(this.value)">
+                <button onclick="document.getElementById('summ-search').value='';onSummSearch('')">Clear</button>
+                <span id="summ-count">20 banks</span>
+            </div>
+            <div class="legend-bar">
+                <strong>Legend:</strong>
+                <span><span class="pill pgr">Green</span> = above industry avg</span>
+                <span><span class="pill pre">Red</span> = below industry avg</span>
+                <span style="color:var(--text-muted)">CAGR = period-dependent · FY25 metrics vs <em>median</em> peer</span>
+            </div>
+            <div class="card">
+                <div class="ct">CAGR &amp; Performance Summary — All 20 Banks</div>
+                <div class="cs">CAGR · Quality · FY25 Latest — click any column header to sort</div>
+                <div class="table-wrap">
+                    <table class="sticky-col">
+                        <thead>
+                            <tr class="gh">
+                                <th rowspan="2" onclick="sortS('r')">#</th>
+                                <th rowspan="2" onclick="sortS('b')">Bank</th>
+                                <th colspan="4" style="border-left:2px solid var(--border)">CAGR</th>
+                                <th colspan="3" style="border-left:2px solid var(--border)">Quality</th>
+                                <th colspan="9" style="border-left:2px solid var(--border)">FY25 Latest</th>
+                            </tr>
+                            <tr>
+                                <th style="border-left:2px solid var(--border)" onclick="sortS('dep')">Dep<br>CAGR</th>
+                                <th onclick="sortS('ca')">CA Dep<br>CAGR</th>
+                                <th onclick="sortS('nmi')">NMI<br>CAGR</th>
+                                <th onclick="sortS('br')">Branch<br>CAGR</th>
+                                <th style="border-left:2px solid var(--border)" onclick="sortS('growth_leverage')">Growth<br>Leverage</th>
+                                <th onclick="sortS('mix_drift')">Mix<br>Drift</th>
+                                <th onclick="sortS('branch_return')">Branch<br>Return</th>
+                                <th style="border-left:2px solid var(--border)" onclick="sortS('br_count')">Branches</th>
+                                <th onclick="sortS('ca_latest')">CA%</th>
+                                <th onclick="sortS('sa_latest')">SA%</th>
+                                <th onclick="sortS('roe_latest')">ROE</th>
+                                <th onclick="sortS('ci_latest')">C/I</th>
+                                <th onclick="sortS('dpb')">Dep/Br</th>
+                                <th onclick="sortS('capb')">CA/Br</th>
+                                <th onclick="sortS('npb')">NMI/Br</th>
+                                <th onclick="sortS('opb')">OPEX/Br</th>
+                            </tr>
+                        </thead>
+                        <tbody id="s-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== TAB: DEPOSITS ===== -->
+        <section id="tab-dep" class="panel">
+            <div class="mb-back" onclick="goBack()">← Back to Menu</div>
+            <div class="kr k4">
+                <div class="kpi"><div class="kl">Industry FY25</div><div class="kv cbl">37.3T</div><div class="ks">PKR · +25.2% YoY</div></div>
+                <div class="kpi"><div class="kl">19-Period CAGR</div><div class="kv cor" id="d-cagr">—</div><div class="ks">FY06→FY25</div></div>
+                <div class="kpi"><div class="kv cgr" id="d-top" style="font-size:20px">—</div><div class="ks" id="d-tops">Fastest growing</div></div>
+                <div class="kpi"><div class="kv cre" id="d-bot" style="font-size:20px">—</div><div class="ks" id="d-bots">Slowest growing</div></div>
+            </div>
+            <div class="r2">
+                <div class="card"><div class="ct">Industry Total Deposits (PKR T) + YoY Growth</div><canvas id="dep-ind" height="220"></canvas></div>
+                <div class="card"><div class="ct">Per-Bank Trend (PKR B)</div><div class="ctrl"><lbl>Bank</lbl><select id="dep-bk" onchange="rDepBk()"></select></div><canvas id="dep-bk-ch" height="190"></canvas></div>
+            </div>
+            <div class="card">
+                <div class="ct">Deposit CAGR — All Banks</div>
+                <div class="cs" id="dep-cagr-note">Green = above industry CAGR · Red = below</div>
+                <div class="search-bar">
+                    <input id="dep-search" type="text" placeholder="Search banks…" oninput="onDepSearch(this.value)">
+                    <button onclick="document.getElementById('dep-search').value='';onDepSearch('')">Clear</button>
+                    <span id="dep-count">20 banks</span>
+                </div>
+                <div class="ptabs">
+                    <button class="ptab active" onclick="sDCP(5,this)">5 Year</button>
+                    <button class="ptab" onclick="sDCP(10,this)">10 Year</button>
+                    <button class="ptab" onclick="sDCP(15,this)">15 Year</button>
+                    <button class="ptab" onclick="sDCP(0,this)">Full</button>
+                </div>
+                <div class="table-wrap">
+                    <table class="sticky-col"><thead><tr>
+                        <th onclick="sortDC('r')">#</th><th onclick="sortDC('b')">Bank</th>
+                        <th onclick="sortDC('c')">CAGR</th><th>Period</th>
+                        <th onclick="sortDC('n')">Periods</th><th onclick="sortDC('s')">Start (B)</th>
+                        <th onclick="sortDC('e')">End (B)</th><th onclick="sortDC('m')">Multiple</th>
+                    </tr></thead><tbody id="dc-tbody"></tbody></table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== TAB: CA % ===== -->
+        <section id="tab-ca" class="panel">
+            <div class="mb-back" onclick="goBack()">← Back to Menu</div>
+            <div class="kr k4">
+                <div class="kpi"><div class="kl">Ind Avg CA% FY25</div><div class="kv cor" id="ca-avg25">—</div><div class="ks">Simple avg</div></div>
+                <div class="kpi"><div class="kl">Highest CA% FY25</div><div class="kv cgr" id="ca-top">—</div><div class="ks" id="ca-tops">—</div></div>
+                <div class="kpi"><div class="kl">Lowest CA% FY25</div><div class="kv cre" id="ca-bot">—</div><div class="ks" id="ca-bots">—</div></div>
+                <div class="kpi"><div class="kl">FY06→FY25 Shift</div><div class="kv cbl" id="ca-chg">—</div><div class="ks">pp change</div></div>
+            </div>
+            <div class="card"><div class="ct">Per Bank CA% vs Industry Average</div><div class="chips" id="ca-chips"></div><canvas id="ca-bk-ch" height="110" class="chrt-sm"></canvas></div>
+            <div class="card chrt-lg"><div class="ct">Per Bank CA% vs Industry Average</div><canvas id="ca-bk-ch-lg" height="260"></canvas></div>
+            <div class="r2">
+                <div class="card"><div class="ct">CA% Ranked (select year)</div><div class="ctrl"><lbl>Year</lbl><select id="ca-yr" onchange="rCArank()">...</select></div><canvas id="ca-rank" height="260"></canvas></div>
+                <div class="card"><div class="ct">Industry CA Deposits (PKR T) + Growth</div><canvas id="ca-ind" height="260"></canvas></div>
+            </div>
+        </section>
+
+        <!-- ===== TAB: SA % ===== -->
+        <section id="tab-sa" class="panel">
+            <div class="mb-back" onclick="goBack()">← Back to Menu</div>
+            <div class="kr k4">
+                <div class="kpi"><div class="kl">Ind Avg SA% FY25</div><div class="kv cor" id="sa-avg25">—</div><div class="ks">Simple avg</div></div>
+                <div class="kpi"><div class="kl">Highest SA% FY25</div><div class="kv cgr" id="sa-top">—</div><div class="ks" id="sa-tops">—</div></div>
+                <div class="kpi"><div class="kl">Lowest SA% FY25</div><div class="kv cre" id="sa-bot">—</div><div class="ks" id="sa-bots">—</div></div>
+                <div class="kpi"><div class="kl">FY06→FY25 Shift</div><div class="kv cbl" id="sa-chg">—</div><div class="ks">pp change</div></div>
+            </div>
+            <div class="card"><div class="ct">Saving Account % vs Industry Average</div><div class="chips" id="sa-chips"></div><canvas id="sa-bk-ch" height="110" class="chrt-sm"></canvas></div>
+            <div class="card chrt-lg"><div class="ct">Saving Account % vs Industry Average</div><canvas id="sa-bk-ch-lg" height="260"></canvas></div>
+            <div class="r2">
+                <div class="card"><div class="ct">SA% Ranked (select year)</div><div class="ctrl"><lbl>Year</lbl><select id="sa-yr" onchange="rSArank()">...</select></div><canvas id="sa-rank" height="260"></canvas></div>
+                <div class="card"><div class="ct">CA% + SA% Industry Average Trend</div><canvas id="casa-trend" height="260"></canvas></div>
+            </div>
+        </section>
+
+        <!-- ===== TAB: NIM LATEST ===== -->
+        <section id="tab-niml" class="panel">
+            <div class="mb-back" onclick="goBack()">← Back to Menu</div>
+            <div class="kr k4">
+                <div class="kpi"><div class="kl">Ind Avg NIM (1QFY26)</div><div class="kv cbl">4.4%</div><div class="ks">Quarterly</div></div>
+                <div class="kpi"><div class="kl">Highest</div><div class="kv cgr">7.2%</div><div class="ks">StanChart</div></div>
+                <div class="kpi"><div class="kl">Lowest</div><div class="kv cre">2.6%</div><div class="ks">Samba</div></div>
+                <div class="kpi"><div class="kl">Peak Avg</div><div class="kv cor">6.9%</div><div class="ks">4QFY23</div></div>
+            </div>
+            <div class="r2">
+                <div class="card"><div class="ct">NIM Rankings — Latest (1QFY26)</div><div class="table-wrap"><table class="sticky-col"><thead><tr><th onclick="sNIM('r')">#</th><th onclick="sNIM('b')">Bank</th><th onclick="sNIM('l')">Latest</th><th>vs Avg</th><th onclick="sNIM('a')">4Q Avg</th><th onclick="sNIM('p')">Peak</th><th>Quarter</th><th>Trend</th></tr></thead><tbody id="nim-tbody"></tbody></table></div></div>
+                <div class="card"><div class="ct">Latest NIM Ranked</div><canvas id="nim-bar" height="360"></canvas></div>
+            </div>
+        </section>
+
+        <!-- ===== TAB: NIM TREND ===== -->
+        <section id="tab-nimt" class="panel">
+            <div class="mb-back" onclick="goBack()">← Back to Menu</div>
+            <div class="note">Select up to <strong>5 banks</strong>. Toggle <strong>Industry Avg</strong> and <strong>Policy Rate</strong>.</div>
+            <div class="card"><div class="ct">Banks (max 5)</div><div class="chips" id="nimt-chips"></div>
+                <div style="border-top:1px solid var(--border2);padding-top:10px;margin-top:4px">
+                    <span style="font-size:13px;font-weight:600;margin-right:8px">Overlays:</span>
+                    <div class="chips" style="margin-bottom:0;display:inline-flex">
+                        <div class="chip sg sel" id="chip-avg" onclick="toggleOL('avg',this)">Industry Avg NIM</div>
+                        <div class="chip sb sel" id="chip-rate" onclick="toggleOL('rate',this)">Policy Rate</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card"><div class="ct">NIM Annual Trend — FY06 to FY25</div><div class="cs">Left axis = NIM % · Right axis = Policy Rate %</div><canvas id="nim-trend" height="260"></canvas></div>
+        </section>
+
+        <!-- ===== TAB: NMI ===== -->
+        <section id="tab-nmi" class="panel">
+            <div class="mb-back" onclick="goBack()">← Back to Menu</div>
+            <div class="kr k4">
+                <div class="kpi"><div class="kl">Ind System CAGR (Full)</div><div class="kv cor">15.4%</div><div class="ks">FY06→FY25</div></div>
+                <div class="kpi"><div class="kl">Highest CAGR (Full)</div><div class="kv cgr">32.3%</div><div class="ks">Meezan</div></div>
+                <div class="kpi"><div class="kl">Lowest CAGR (Full)</div><div class="kv cre">8.8%</div><div class="ks">StanChart</div></div>
+                <div class="kpi"><div class="kl">Values in</div><div class="kv" style="font-size:20px">PKR B</div><div class="ks">Billions</div></div>
+            </div>
+            <div class="card">
+                <div class="ct">Net Markup Income CAGR — All Banks</div>
+                <div class="cs" id="nmi-note">Green = above industry avg · Red = below</div>
+                <div class="ptabs">
+                    <button class="ptab active" onclick="sNMIP(5,this)">5 Year</button>
+                    <button class="ptab" onclick="sNMIP(10,this)">10 Year</button>
+                    <button class="ptab" onclick="sNMIP(15,this)">15 Year</button>
+                    <button class="ptab" onclick="sNMIP(0,this)">Full</button>
+                </div>
+                <div class="table-wrap">
+                    <table class="sticky-col"><thead><tr>
+                        <th onclick="sortNMI('r')">#</th><th onclick="sortNMI('b')">Bank</th>
+                        <th onclick="sortNMI('c')">CAGR</th><th>Period</th>
+                        <th onclick="sortNMI('n')">Periods</th><th onclick="sortNMI('s')">Start (M)</th>
+                        <th onclick="sortNMI('e')">End (M)</th><th onclick="sortNMI('m')">Multiple</th>
+                    </tr></thead><tbody id="nmi-tbody"></tbody></table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== TAB: COMMISSION ===== -->
+        <section id="tab-com" class="panel">
+            <div class="mb-back" onclick="goBack()">← Back to Menu</div>
+            <div class="note">Commission Income / Deposits % — proxy for trade finance &amp; FX franchise. <strong>FY20 dip = COVID import/export collapse.</strong></div>
+            <div class="card"><div class="ct">Per Bank Non-Interest Income to Deposit Ratio vs Industry Average</div><div class="chips" id="com-chips"></div><canvas id="com-bk-ch" height="128" class="chrt-sm"></canvas></div>
+            <div class="card chrt-lg"><div class="ct">Per Bank Non-Interest Income to Deposit Ratio vs Industry Average</div><canvas id="com-bk-ch-lg" height="260"></canvas></div>
+        </section>
+
+        <!-- ===== TAB: BRANCHES ===== -->
+        <section id="tab-br" class="panel">
+            <div class="mb-back" onclick="goBack()">← Back to Menu</div>
+            <div class="kr k4">
+                <div class="kpi"><div class="kl">Ind Avg Dep/Branch FY25</div><div class="kv cor" id="br-dpb25">—</div><div class="ks">PKR M</div></div>
+                <div class="kpi"><div class="kl">Ind Avg CA/Branch FY25</div><div class="kv cbl" id="br-cpb25">—</div><div class="ks">PKR M</div></div>
+                <div class="kpi"><div class="kl">Ind Avg NMI/Branch FY25</div><div class="kv cgr" id="br-npb25">—</div><div class="ks">PKR M</div></div>
+                <div class="kpi"><div class="kl">Ind Avg OPEX/Branch FY25</div><div class="kv cre" id="br-opb25">—</div><div class="ks">PKR M</div></div>
+            </div>
+            <div class="card"><div class="ct">Banks (max 5)</div><div class="chips" id="br-chips"></div>
+                <div style="border-top:1px solid var(--border2);padding-top:10px;margin-top:4px">
+                    <div class="chips" style="margin-bottom:0;display:inline-flex">
+                        <div class="chip sg sel" id="br-chip-avg" onclick="toggleBRAvg(this)">Industry Average</div>
+                    </div>
+                </div>
+            </div>
+            <div class="r2">
+                <div class="card"><div class="ct">Branch Count <span style="font-weight:400;font-size:13px;color:var(--text-muted)">· Industry Median <span style="color:var(--pos)" id="br-total-fy25">—</span> (FY25)</span></div><canvas id="br-count" height="230"></canvas></div>
+                <div class="card"><div class="ct">Branch Count FY25 — Ranked</div><canvas id="br-rank" height="230"></canvas></div>
+            </div>
+            <div class="r2">
+                <div class="card"><div class="ct">Deposits per Branch (PKR M)</div><canvas id="br-dep" height="230"></canvas></div>
+                <div class="card"><div class="ct">CA Deposits per Branch (PKR M)</div><canvas id="br-ca" height="230"></canvas></div>
+            </div>
+            <div class="r2">
+                <div class="card"><div class="ct">NMI per Branch (PKR M)</div><canvas id="br-nmi" height="230"></canvas></div>
+                <div class="card"><div class="ct">OPEX per Branch (PKR M)</div><canvas id="br-opex" height="230"></canvas></div>
+            </div>
+        </section>
+
+        <!-- ===== TAB: ROE ===== -->
+        <section id="tab-roe" class="panel">
+            <div class="mb-back" onclick="goBack()">← Back to Menu</div>
+            <div class="kr k4">
+                <div class="kpi"><div class="kl">Ind Avg ROE FY25</div><div class="kv cor" id="roe-avg25">—</div><div class="ks">Simple avg</div></div>
+                <div class="kpi"><div class="kl">Highest ROE FY25</div><div class="kv cgr" id="roe-top">—</div><div class="ks" id="roe-tops">—</div></div>
+                <div class="kpi"><div class="kl">Lowest ROE FY25</div><div class="kv cre" id="roe-bot">—</div><div class="ks" id="roe-bots">—</div></div>
+                <div class="kpi"><div class="kl">FY06→FY25 Shift</div><div class="kv cbl" id="roe-chg">—</div><div class="ks">pp change</div></div>
+            </div>
+            <div class="card"><div class="ct">Per Bank ROE % vs Industry Average</div><div class="chips" id="roe-chips"></div><canvas id="roe-bk-ch" height="110" class="chrt-sm"></canvas></div>
+            <div class="card chrt-lg"><div class="ct">Per Bank ROE % vs Industry Average</div><canvas id="roe-bk-ch-lg" height="260"></canvas></div>
+            <div class="r2">
+                <div class="card"><div class="ct">ROE Ranked</div><div class="ctrl"><lbl>Year</lbl><select id="roe-yr" onchange="rROErank()">...</select></div><canvas id="roe-rank" height="260"></canvas></div>
+                <div class="card"><div class="ct">Industry Average ROE % — FY06 to FY25</div><canvas id="roe-trend" height="260"></canvas></div>
+            </div>
+        </section>
+
+        <!-- ===== TAB: C/I ===== -->
+        <section id="tab-ci" class="panel">
+            <div class="mb-back" onclick="goBack()">← Back to Menu</div>
+            <div class="kr k4">
+                <div class="kpi"><div class="kl">Ind Avg C/I FY25</div><div class="kv cor" id="ci-avg25">—</div><div class="ks">Simple avg</div></div>
+                <div class="kpi"><div class="kl">Highest C/I FY25</div><div class="kv cre" id="ci-top">—</div><div class="ks" id="ci-tops">—</div></div>
+                <div class="kpi"><div class="kl">Lowest C/I FY25</div><div class="kv cgr" id="ci-bot">—</div><div class="ks" id="ci-bots">—</div></div>
+                <div class="kpi"><div class="kl">FY06→FY25 Shift</div><div class="kv cbl" id="ci-chg">—</div><div class="ks">pp change</div></div>
+            </div>
+            <div class="card"><div class="ct">Per Bank C/I % vs Industry Average</div><div class="chips" id="ci-chips"></div><canvas id="ci-bk-ch" height="110" class="chrt-sm"></canvas></div>
+            <div class="card chrt-lg"><div class="ct">Per Bank C/I % vs Industry Average</div><canvas id="ci-bk-ch-lg" height="260"></canvas></div>
+            <div class="r2">
+                <div class="card"><div class="ct">C/I Ranked</div><div class="ctrl"><lbl>Year</lbl><select id="ci-yr" onchange="rCIrank()">...</select></div><canvas id="ci-rank" height="260"></canvas></div>
+                <div class="card"><div class="ct">Industry Average C/I % — FY06 to FY25</div><canvas id="ci-trend" height="260"></canvas></div>
+            </div>
+        </section>
+
+        <!-- ===== TAB: BANK SNAPSHOT (ENHANCED) ===== -->
+        <!-- ===== TAB: BANK SNAPSHOT (ENHANCED) ===== -->
+<section id="tab-banksnap" class="panel">
+    <div class="mb-back" onclick="goBack()">← Back to Menu</div>
+
+    <!-- Bank Selector with Brand Header -->
+    <div class="card" style="margin-bottom:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; gap:14px;">
+                <div id="snap-logo" style="width:90px; height:90px; border-radius:14px; background:#C9A84C; display:flex; align-items:center; justify-content:center; color:#fff; font-size:20px; font-weight:900; box-shadow:0 4px 16px rgba(201,168,76,0.33); flex-shrink:0;">IK</div>
+                <div>
+                    <div class="ct" id="snap-bank-name" style="margin:0; color:#C9A84C;">Select a bank</div>
+                    <div class="cs" style="margin:0; font-size:12px;" id="snap-bank-meta">FY25 · 20 banks</div>
+                </div>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center;">
+                <lbl>Bank</lbl>
+                <select id="bankSelector" style="min-width:200px;"></select>
+            </div>
+        </div>
+    </div>
+
+    <!-- KPI Row -->
+    <div class="kr k4" id="snap-kpi-row">
+        <div class="kpi" id="card-dep"><div><span class="icon">📦</span><div><div class="kl">Deposits (FY25)</div><div class="kv" id="bank-dep-fy25">—</div><div class="ks">PKR B</div></div></div><span class="badge" id="card-dep-badge"></span></div>
+        <div class="kpi" id="card-cagr"><div><span class="icon">⬆️</span><div><div class="kl">5Y CAGR (Dep)</div><div class="kv" id="bank-dep-cagr">—</div><div class="ks">FY20→FY25</div></div></div><span class="badge" id="card-cagr-badge"></span></div>
+        <div class="kpi" id="card-roe"><div><span class="icon">⭐</span><div><div class="kl">5Y Avg ROE</div><div class="kv" id="bank-roe-avg5">—</div><div class="ks">FY21–FY25</div></div></div><span class="badge" id="card-roe-badge"></span></div>
+        <div class="kpi" id="card-nim"><div><span class="icon">💧</span><div><div class="kl">5Y Avg NIM</div><div class="kv" id="bank-nim-avg5">—</div><div class="ks">FY21–FY25</div></div></div><span class="badge" id="card-nim-badge"></span></div>
+    </div>
+
+    <!-- Key Takeaways -->
+    <div class="takeaways" id="takeaways-card">
+        <h4>⚡ Key Takeaways — 5 Second Health Check</h4>
+        <div id="takeaways-content"><span style="color:var(--text-muted); font-size:13px;">Select a bank to see insights…</span></div>
+    </div>
+
+    <!-- Compare Bar -->
+    <div class="compare-bar">
+        <span class="compare-label">🔄 Compare with:</span>
+        <span class="compare-swatch" id="compare-swatch-main" style="background:#C9A84C;"></span>
+        <span style="font-size:13px; font-weight:600; color:var(--text-primary);" id="compare-main-label">Bank</span>
+        <span style="color:var(--text-muted);">vs</span>
+        <select id="compare-selector" style="min-width:180px; padding:6px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px; background:var(--white);">
+            <option value="">— Select a peer bank —</option>
+        </select>
+        <span class="compare-swatch" id="compare-swatch-peer" style="background:#e17055; display:none;"></span>
+        <span style="font-size:13px; font-weight:600; color:#e17055; display:none;" id="compare-peer-label">Peer</span>
+        <button class="clear-compare" id="clear-compare-btn" style="display:none;" onclick="clearCompare()">✕ Clear</button>
+    </div>
+
+    <!-- Charts – heights reduced to 180px -->
+    <!-- Charts -->
+<div class="r2">
+    <div class="card"><div class="ct">Deposits History</div><canvas id="bank-dep-ch" height="180"></canvas></div>
+    <div class="card"><div class="ct">OPEX per Branch (PKR M)</div><canvas id="bank-opex-ch" height="180"></canvas></div>
+</div>
+<div class="r2">
+    <div class="card"><div class="ct">ROE vs Industry Average</div><canvas id="bank-roe-ch" height="180"></canvas></div>
+    <div class="card"><div class="ct">CA% &amp; SA% History</div><canvas id="bank-casa-ch" height="180"></canvas></div>
+</div>
+<div class="card">
+    <div class="ct">NIM History (vs Industry Avg)</div>
+    <canvas id="bank-nim-ch" height="180"></canvas>
+</div>
+
+    <!-- Compact 5-Year Table -->
+    <div class="card" style="padding:0; overflow:hidden;">
+        <div style="padding:16px 16px 0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div class="ct" style="margin-bottom:0;">📅 5‑Year Performance — FY21 to FY25</div>
+            <div style="font-size:11px; color:var(--text-muted);">Inline bar = relative to best year</div>
+        </div>
+        <div class="table-wrap" style="padding:0 16px 8px;">
+            <table class="compact-tbl" id="compact-tbl">
+                <thead><tr><th>Year</th><th>Deposits (Bn)</th><th>ROE %</th><th>NIM %</th></tr></thead>
+                <tbody id="compact-body"></tbody>
+            </table>
+        </div>
+        <div class="history-toggle">
+            <button class="toggle-btn" id="hist-toggle-btn">📖 Show Full History (FY06–FY25)</button>
+        </div>
+    </div>
+
+    <!-- Full History -->
+    <div class="full-history" id="full-history-container">
+        <div class="card" style="padding:0; overflow:hidden; margin-top:16px;">
+            <div style="padding:14px 16px 0;"><div class="ct">Complete History — FY06 to FY25</div></div>
+            <div class="table-wrap" style="max-height:480px; overflow-y:auto;">
+                <table class="sticky-col" id="full-history-table">
+                    <thead><tr>
+                        <th>Year</th><th>Deposits</th><th>CA%</th><th>SA%</th><th>ROE</th><th>NIM</th><th>Branches</th><th>Dep/Br</th>
+                    </tr></thead>
+                    <tbody id="full-history-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Working Notes -->
+    <div class="card">
+        <div class="ct">📝 Working Notes</div>
+        <div class="cs">5Y CAGR = (End/Start)^(1/5)-1 · 5Y averages = mean of FY21–FY25 · Dep/Br = (Deposits × 1,000) / Branches</div>
+        <textarea id="bank-notes" style="width:100%; min-height:100px; border:2px solid var(--border); border-radius:8px; padding:10px; font-family:var(--font); font-size:13px; resize:vertical; outline:none; margin-top:8px;" placeholder="Your analysis notes for this bank..."></textarea>
+    </div>
+</section>
+
+        <!-- GLOSSARY -->
+        <div class="card glossary">
+            <div class="ct">Metric Glossary</div>
+            <div class="r2">
+                <div>
+                    <div class="gh-title">CAGR</div>
+                    <table class="gt"><tr><td class="gn">Dep CAGR</td><td>Deposit growth rate</td></tr>
+                    <tr><td class="gn">CA Dep CAGR</td><td>Current Account deposit growth</td></tr>
+                    <tr><td class="gn">NMI CAGR</td><td>Net Markup Income growth</td></tr>
+                    <tr><td class="gn">Branch CAGR</td><td>Branch network growth</td></tr></table>
+                    <div class="gh-title">Latest Mix</div>
+                    <table class="gt"><tr><td class="gn">Branches</td><td>Branch count at period-end</td></tr>
+                    <tr><td class="gn">CA%</td><td>Current Account % of deposits</td></tr>
+                    <tr><td class="gn">SA%</td><td>Savings Account % of deposits</td></tr>
+                    <tr><td class="gn">ROE</td><td>Return on Equity</td></tr>
+                    <tr><td class="gn">C/I</td><td>Cost to Income</td></tr></table>
+                </div>
+                <div>
+                    <div class="gh-title">Quality</div>
+                    <table class="gt"><tr><td class="gn">Growth Leverage</td><td>Dep CAGR − Branch CAGR</td></tr>
+                    <tr><td class="gn">Mix Drift</td><td>CA Dep CAGR − Dep CAGR</td></tr>
+                    <tr><td class="gn">Branch Return</td><td>NMI/Br ÷ OPEX/Br</td></tr></table>
+                    <div class="gh-title">Per Branch</div>
+                    <table class="gt"><tr><td class="gn">Dep/Br</td><td>Total deposits per branch</td></tr>
+                    <tr><td class="gn">CA/Br</td><td>CA deposits per branch</td></tr>
+                    <tr><td class="gn">NMI/Br</td><td>Net Markup Income per branch</td></tr>
+                    <tr><td class="gn">OPEX/Br</td><td>Operating expense per branch</td></tr></table>
+                </div>
+            </div>
+            <div class="glossary-footer">
+                <span class="pill pgr">Green</span> = above industry avg/median &nbsp;·&nbsp;
+                <span class="pill pre">Red</span> = below &nbsp;·&nbsp;
+                C/I, OPEX/Br use <em>inverted</em> colouring
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <strong>Disclaimer:</strong> Data sourced from SBP publications and public filings. InvestKaar makes no guarantees regarding completeness or timeliness. This dashboard is for informational purposes only — it does <strong>not</strong> constitute investment advice. Past performance is not indicative of future results.
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
